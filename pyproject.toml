@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "rid-fusion"
+version = "0.2.0"
+description = "Multi-Protocol Remote ID Signal Fusion Engine"
+requires-python = ">=3.9"
+dependencies = ["numpy>=1.24"]
+license = {text = "MIT"}
+authors = [{name = "Kongyu Technologies"}]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Programming Language :: Python :: 3.9",
+]
+
+[project.scripts]
+rid-fusion-test = "tests.test_core:main"
+rid-fusion-gui = "rid_fusion_gui:main"
+
+[tool.setuptools.packages.find]
+include = ["rid_fusion*"]

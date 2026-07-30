@@ -267,7 +267,8 @@ def test_deduplication_position_outlier():
     print("  ✓ test_deduplication_position_outlier")
 
 
-if __name__ == "__main__":
+def main() -> None:
+    """Entry point for console_scripts: ``rid-fusion-test``."""
     print("Running rid-fusion tests...\n")
     tests = [
         test_token_creation,
@@ -298,3 +299,7 @@ if __name__ == "__main__":
             failures += 1
     print("\n%d/%d tests passed" % (len(tests) - failures, len(tests)))
     sys.exit(failures)
+
+
+if __name__ == "__main__":
+    main()

@@ -11,8 +11,13 @@ setup(
     python_requires=">=3.9",
     install_requires=[
         "numpy>=1.24",
-        "scipy>=1.10",
     ],
+    entry_points={
+        "console_scripts": [
+            "rid-fusion-test = tests.test_core:main",
+            "rid-fusion-gui = rid_fusion_gui:main",
+        ],
+    },
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Science/Research",
