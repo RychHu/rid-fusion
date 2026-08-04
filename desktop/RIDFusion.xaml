@@ -1,0 +1,247 @@
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="RID Fusion 工作台" Width="1240" Height="790"
+        MinWidth="1080" MinHeight="700" WindowStartupLocation="CenterScreen"
+        Background="#F7F7F8" Foreground="#202123" FontFamily="Microsoft YaHei UI">
+    <Window.Resources>
+        <!-- Central visual tokens: edit these brushes to restyle the whole app. -->
+        <SolidColorBrush x:Key="WindowBrush" Color="#F7F7F8"/>
+        <SolidColorBrush x:Key="SidebarBrush" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="SurfaceBrush" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="SurfaceSoftBrush" Color="#F3F4F6"/>
+        <SolidColorBrush x:Key="BorderBrush" Color="#D9D9E3"/>
+        <SolidColorBrush x:Key="TextBrush" Color="#202123"/>
+        <SolidColorBrush x:Key="MutedBrush" Color="#6B7280"/>
+        <SolidColorBrush x:Key="AccentBrush" Color="#10A37F"/>
+
+        <Style x:Key="NavButton" TargetType="Button">
+            <Setter Property="Foreground" Value="{StaticResource MutedBrush}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="18,12"/>
+            <Setter Property="Margin" Value="10,2"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="NavBorder" Background="{TemplateBinding Background}" CornerRadius="8">
+                            <ContentPresenter Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="NavBorder" Property="Background" Value="#ECECF1"/><Setter Property="Foreground" Value="#202123"/></Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="Foreground" Value="White"/><Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/><Setter Property="Padding" Value="18,11"/><Setter Property="FontWeight" Value="SemiBold"/><Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="Button"><Border Background="{TemplateBinding Background}" CornerRadius="8"><ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/></Border></ControlTemplate></Setter.Value></Setter>
+        </Style>
+        <Style x:Key="SecondaryButton" TargetType="Button">
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}"/><Setter Property="Background" Value="{StaticResource SurfaceSoftBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/><Setter Property="Padding" Value="18,10"/><Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="Button"><Border Background="{TemplateBinding Background}" CornerRadius="8"><ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/></Border></ControlTemplate></Setter.Value></Setter>
+        </Style>
+        <Style x:Key="Input" TargetType="TextBox">
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}"/><Setter Property="Background" Value="#FFFFFF"/><Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/><Setter Property="Padding" Value="10,8"/><Setter Property="CaretBrush" Value="White"/>
+        </Style>
+        <Style x:Key="PageTitle" TargetType="TextBlock"><Setter Property="FontSize" Value="24"/><Setter Property="FontWeight" Value="SemiBold"/><Setter Property="Foreground" Value="{StaticResource TextBrush}"/></Style>
+        <Style x:Key="Muted" TargetType="TextBlock"><Setter Property="Foreground" Value="{StaticResource MutedBrush}"/><Setter Property="FontSize" Value="13"/></Style>
+        <Style x:Key="CardBorder" TargetType="Border"><Setter Property="Background" Value="{StaticResource SurfaceBrush}"/><Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/><Setter Property="BorderThickness" Value="1"/><Setter Property="CornerRadius" Value="12"/><Setter Property="Padding" Value="18"/></Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions><ColumnDefinition Width="226"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+        <Border Grid.Column="0" Background="{StaticResource SidebarBrush}">
+            <Grid><Grid.RowDefinitions><RowDefinition Height="82"/><RowDefinition Height="*"/><RowDefinition Height="50"/></Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="18,20,0,0">
+                    <Border Background="{StaticResource AccentBrush}" CornerRadius="7" Width="34" Height="34"><TextBlock Text="RF" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/></Border>
+                    <TextBlock Text="RID Fusion" FontSize="17" FontWeight="SemiBold" Margin="10,6,0,0"/>
+                </StackPanel>
+                <StackPanel Grid.Row="1">
+                    <Button x:Name="NavOverview" Style="{StaticResource NavButton}" Content="总览"/>
+                    <Button x:Name="NavFusion" Style="{StaticResource NavButton}" Content="融合实验"/>
+                    <Button x:Name="NavScenarios" Style="{StaticResource NavButton}" Content="场景与多目标"/>
+                    <Button x:Name="NavImport" Style="{StaticResource NavButton}" Content="数据导入与回放"/>
+                    <Button x:Name="NavAnalysis" Style="{StaticResource NavButton}" Content="对比与报告"/>
+                    <Button x:Name="NavEvidence" Style="{StaticResource NavButton}" Content="证据与协议"/>
+                    <Button x:Name="NavAdapt" Style="{StaticResource NavButton}" Content="少样本适配"/>
+                    <Button x:Name="NavTests" Style="{StaticResource NavButton}" Content="验证中心"/>
+                    <Button x:Name="NavSettings" Style="{StaticResource NavButton}" Content="界面设置"/>
+                </StackPanel>
+                <TextBlock Grid.Row="2" Text="研究原型 · v0.4.0" Foreground="{StaticResource MutedBrush}" FontSize="11" Margin="20,10"/>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions><RowDefinition Height="64"/><RowDefinition Height="1"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+            <Grid Grid.Row="0" Margin="26,0"><TextBlock x:Name="TopTitle" Text="总览" FontWeight="SemiBold" VerticalAlignment="Center"/><TextBlock x:Name="ActivityText" Text="就绪" Foreground="{StaticResource MutedBrush}" HorizontalAlignment="Right" VerticalAlignment="Center"/></Grid>
+            <Border Grid.Row="1" Background="{StaticResource BorderBrush}"/>
+            <Grid Grid.Row="2">
+                <!-- Overview -->
+                <ScrollViewer x:Name="PageOverview" VerticalScrollBarVisibility="Auto"><StackPanel Margin="26,24">
+                    <TextBlock Text="RID Fusion 工作台" Style="{StaticResource PageTitle}"/><TextBlock Text="多协议观测关联、可解释状态融合与证据链检查" Style="{StaticResource Muted}" Margin="0,6,0,20"/>
+                    <Grid><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition/><ColumnDefinition/><ColumnDefinition/></Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource CardBorder}" Margin="0,0,6,0"><StackPanel><TextBlock Text="核心模式" Style="{StaticResource Muted}"/><TextBlock Text="可解释融合" FontSize="23" FontWeight="SemiBold" Margin="0,5"/><TextBlock Text="协方差加权基线" Style="{StaticResource Muted}"/></StackPanel></Border>
+                        <Border Grid.Column="1" Style="{StaticResource CardBorder}" Margin="6,0"><StackPanel><TextBlock Text="协议来源" Style="{StaticResource Muted}"/><TextBlock Text="4 类" Foreground="#5B9CF6" FontSize="23" FontWeight="SemiBold" Margin="0,5"/><TextBlock Text="多承载观测" Style="{StaticResource Muted}"/></StackPanel></Border>
+                        <Border Grid.Column="2" Style="{StaticResource CardBorder}" Margin="6,0"><StackPanel><TextBlock Text="证据状态" Style="{StaticResource Muted}"/><TextBlock Text="完整保留" Foreground="#10A37F" FontSize="23" FontWeight="SemiBold" Margin="0,5"/><TextBlock Text="融合前不删除" Style="{StaticResource Muted}"/></StackPanel></Border>
+                        <Border Grid.Column="3" Style="{StaticResource CardBorder}" Margin="6,0,0,0"><StackPanel><TextBlock Text="项目版本" Style="{StaticResource Muted}"/><TextBlock Text="0.4.0" Foreground="#F0A04B" FontSize="23" FontWeight="SemiBold" Margin="0,5"/><TextBlock Text="多场景分析工作台" Style="{StaticResource Muted}"/></StackPanel></Border>
+                    </Grid>
+                    <Border Style="{StaticResource CardBorder}" Margin="0,20,0,0" Height="300"><StackPanel><TextBlock Text="当前处理链" FontSize="16" FontWeight="SemiBold"/><TextBlock Text="每一步均保留来源、不确定度和版本" Style="{StaticResource Muted}" Margin="0,4,0,24"/>
+                        <Grid VerticalAlignment="Center"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="34"/><ColumnDefinition/><ColumnDefinition Width="34"/><ColumnDefinition/><ColumnDefinition Width="34"/><ColumnDefinition/><ColumnDefinition Width="34"/><ColumnDefinition/></Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" Background="#F3F4F6" CornerRadius="9" Padding="13"><TextBlock Text="协议规范化" HorizontalAlignment="Center"/></Border><TextBlock Grid.Column="1" Text="→" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#9CA3AF"/>
+                            <Border Grid.Column="2" Background="#F3F4F6" CornerRadius="9" Padding="13"><TextBlock Text="时空关联" HorizontalAlignment="Center"/></Border><TextBlock Grid.Column="3" Text="→" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#9CA3AF"/>
+                            <Border Grid.Column="4" Background="#10A37F" CornerRadius="9" Padding="13"><TextBlock Text="状态融合" Foreground="White" HorizontalAlignment="Center" FontWeight="SemiBold"/></Border><TextBlock Grid.Column="5" Text="→" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#9CA3AF"/>
+                            <Border Grid.Column="6" Background="#F3F4F6" CornerRadius="9" Padding="13"><TextBlock Text="注意力表征" HorizontalAlignment="Center"/></Border><TextBlock Grid.Column="7" Text="→" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#9CA3AF"/>
+                            <Border Grid.Column="8" Background="#F3F4F6" CornerRadius="9" Padding="13"><TextBlock Text="证据输出" HorizontalAlignment="Center"/></Border>
+                        </Grid></StackPanel></Border>
+                </StackPanel></ScrollViewer>
+
+                <!-- Fusion lab -->
+                <Grid x:Name="PageFusion" Visibility="Collapsed" Margin="26,24"><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                    <StackPanel><TextBlock Text="融合实验" Style="{StaticResource PageTitle}"/><TextBlock Text="运行合成轨迹，查看关联组、状态不确定度和协议贡献" Style="{StaticResource Muted}" Margin="0,6,0,18"/></StackPanel>
+                    <Grid Grid.Row="1"><Grid.ColumnDefinitions><ColumnDefinition Width="290"/><ColumnDefinition Width="12"/><ColumnDefinition/></Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource CardBorder}"><ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel>
+                            <TextBlock Text="实验参数" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                            <Border Background="#E8F5F1" BorderBrush="#A7DCCF" BorderThickness="1" CornerRadius="7" Padding="10" Margin="0,0,0,12"><TextBlock Text="第一次使用：保留默认值，选择 Wi-Fi + BLE + NR，然后点击“运行融合”。当前页面生成模拟数据，不会监听真实无线信号。" Foreground="#176B57" FontSize="11" TextWrapping="Wrap"/></Border>
+                            <TextBlock Text="目标ID" Style="{StaticResource Muted}"/><TextBox x:Name="InputDrone" Text="UAS-A17F" Style="{StaticResource Input}" Margin="0,4,0,2" ToolTip="给本次模拟目标起一个名字，用于关联同一目标"/><TextBlock Text="作用：标识同一目标。范围：1～64字符；例 UAS-001" Foreground="#6B7280" FontSize="11" TextWrapping="Wrap" Margin="1,0,0,9"/>
+                            <TextBlock Text="纬度" Style="{StaticResource Muted}"/><TextBox x:Name="InputLat" Text="30.5728" Style="{StaticResource Input}" Margin="0,4,0,2" ToolTip="模拟轨迹的起始纬度"/><TextBlock Text="作用：设置起点南北位置。范围：−90～90；成都例 30.5728" Foreground="#6B7280" FontSize="11" TextWrapping="Wrap" Margin="1,0,0,9"/>
+                            <TextBlock Text="经度" Style="{StaticResource Muted}"/><TextBox x:Name="InputLon" Text="104.0668" Style="{StaticResource Input}" Margin="0,4,0,2" ToolTip="模拟轨迹的起始经度"/><TextBlock Text="作用：设置起点东西位置。范围：−180～180；成都例 104.0668" Foreground="#6B7280" FontSize="11" TextWrapping="Wrap" Margin="1,0,0,9"/>
+                            <TextBlock Text="高度（m）" Style="{StaticResource Muted}"/><TextBox x:Name="InputAlt" Text="120" Style="{StaticResource Input}" Margin="0,4,0,2" ToolTip="模拟开始时的飞行高度，单位米"/><TextBlock Text="作用：设置起始高度。范围：−500～10,000 m；低空推荐0～300 m" Foreground="#6B7280" FontSize="11" TextWrapping="Wrap" Margin="1,0,0,9"/>
+                            <TextBlock Text="时长（s）" Style="{StaticResource Muted}"/><TextBox x:Name="InputDuration" Text="30" Style="{StaticResource Input}" Margin="0,4,0,2" ToolTip="模拟飞行多少秒，时间越长数据越多"/><TextBlock Text="作用：决定模拟数据量。范围：1～3,600 s；推荐10～300 s" Foreground="#6B7280" FontSize="11" TextWrapping="Wrap" Margin="1,0,0,9"/>
+                            <TextBlock Text="实验编号（随机种子）" Style="{StaticResource Muted}"/><TextBox x:Name="InputSeed" Text="42" Style="{StaticResource Input}" Margin="0,4,0,2" ToolTip="控制模拟噪声和漏检；相同编号可复现实验"/><TextBlock Text="作用：选择一组随机误差。范围：0～4,294,967,295整数；相同值产生相同模拟条件" Foreground="#6B7280" FontSize="11" TextWrapping="Wrap" Margin="1,0,0,9"/>
+                            <TextBlock Text="协议组合" Style="{StaticResource Muted}"/><ComboBox x:Name="InputProtocols" SelectedIndex="1" Background="#FFFFFF" Foreground="#202123" Margin="0,4,0,2" ToolTip="选择本次要模拟的观测来源"><ComboBoxItem Tag="wifi_ble">Wi-Fi + BLE</ComboBoxItem><ComboBoxItem Tag="wifi_ble_nr">Wi-Fi + BLE + NR</ComboBoxItem><ComboBoxItem Tag="wifi">Wi-Fi</ComboBoxItem><ComboBoxItem Tag="all">全部模拟来源</ComboBoxItem></ComboBox><TextBlock Text="作用：选择模拟观测来源；不是监听电脑附近的真实信号" Foreground="#6B7280" FontSize="11" TextWrapping="Wrap" Margin="1,0,0,14"/>
+                            <Expander Header="高级飞行与环境参数" Foreground="#202123" Margin="0,0,0,12"><StackPanel Margin="0,8,0,0">
+                                <TextBlock Text="采样间隔（s，0.1～60）" Style="{StaticResource Muted}"/><TextBox x:Name="InputDt" Text="1" Style="{StaticResource Input}" Margin="0,3,0,8"/>
+                                <TextBlock Text="速度（m/s，0～150）" Style="{StaticResource Muted}"/><TextBox x:Name="InputSpeed" Text="8" Style="{StaticResource Input}" Margin="0,3,0,8"/>
+                                <TextBlock Text="航向角（°，0～360）" Style="{StaticResource Muted}"/><TextBox x:Name="InputHeading" Text="45" Style="{StaticResource Input}" Margin="0,3,0,8"/>
+                                <TextBlock Text="风速（m/s，0～100）" Style="{StaticResource Muted}"/><TextBox x:Name="InputWind" Text="0" Style="{StaticResource Input}" Margin="0,3,0,8"/>
+                                <TextBlock Text="降水（mm/h，0～500）" Style="{StaticResource Muted}"/><TextBox x:Name="InputRain" Text="0" Style="{StaticResource Input}" Margin="0,3,0,8"/>
+                                <TextBlock Text="能见度（m，1～100000）" Style="{StaticResource Muted}"/><TextBox x:Name="InputVisibility" Text="10000" Style="{StaticResource Input}" Margin="0,3,0,0"/>
+                            </StackPanel></Expander>
+                            <Button x:Name="RunFusion" Content="运行融合" Style="{StaticResource PrimaryButton}"/><Button x:Name="ClearFusion" Content="清空结果" Style="{StaticResource SecondaryButton}" Margin="0,8,0,0"/>
+                        </StackPanel></ScrollViewer></Border>
+                        <Grid Grid.Column="2"><Grid.RowDefinitions><RowDefinition Height="112"/><RowDefinition Height="12"/><RowDefinition/></Grid.RowDefinitions>
+                            <Grid><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition/><ColumnDefinition/></Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" Style="{StaticResource CardBorder}" Margin="0,0,6,0"><StackPanel><TextBlock Text="接收观测" Style="{StaticResource Muted}"/><TextBlock x:Name="MetricObs" Text="—" FontSize="23" FontWeight="SemiBold" Foreground="#5B9CF6" Margin="0,5"/><TextBlock Text="全部保留" Style="{StaticResource Muted}"/></StackPanel></Border>
+                                <Border Grid.Column="1" Style="{StaticResource CardBorder}" Margin="6,0"><StackPanel><TextBlock Text="关联组" Style="{StaticResource Muted}"/><TextBlock x:Name="MetricGroups" Text="—" FontSize="23" FontWeight="SemiBold" Foreground="#10A37F" Margin="0,5"/><TextBlock Text="目标 × 时间窗" Style="{StaticResource Muted}"/></StackPanel></Border>
+                                <Border Grid.Column="2" Style="{StaticResource CardBorder}" Margin="6,0,0,0"><StackPanel><TextBlock Text="水平不确定度" Style="{StaticResource Muted}"/><TextBlock x:Name="MetricStd" Text="—" FontSize="23" FontWeight="SemiBold" Foreground="#58C792" Margin="0,5"/><TextBlock Text="平均估计" Style="{StaticResource Muted}"/></StackPanel></Border>
+                            </Grid>
+                            <Border Grid.Row="2" Style="{StaticResource CardBorder}"><Grid><Grid.RowDefinitions><RowDefinition Height="32"/><RowDefinition/><RowDefinition Height="36"/><RowDefinition Height="Auto"/></Grid.RowDefinitions><TextBlock Text="轨迹与融合状态" FontSize="16" FontWeight="SemiBold"/><Canvas x:Name="PlotCanvas" Grid.Row="1" Background="#F8FAFC" ClipToBounds="True"/><TextBlock x:Name="FusionDetail" Grid.Row="2" Text="运行后显示协议贡献和证据状态" Style="{StaticResource Muted}" VerticalAlignment="Center"/>
+                                <Expander Grid.Row="3" Header="如何理解输出结果" IsExpanded="True" Foreground="#202123" Margin="0,4,0,0"><Border Background="#F3F4F6" CornerRadius="8" Padding="12" Margin="0,7,0,0"><StackPanel>
+                                    <TextBlock Text="接收观测：各模拟来源成功产生的观测总数；受模拟漏检影响，可能少于理论数量。" Foreground="#4B5563" FontSize="11" TextWrapping="Wrap" Margin="0,2"/>
+                                    <TextBlock Text="关联组：系统判断属于同一目标、同一时间窗口的观测集合；多条观测可形成一个关联组。" Foreground="#4B5563" FontSize="11" TextWrapping="Wrap" Margin="0,2"/>
+                                    <TextBlock Text="水平不确定度：融合位置的估计分散程度，通常越小越集中；它不是实际误差保证。" Foreground="#4B5563" FontSize="11" TextWrapping="Wrap" Margin="0,2"/>
+                                    <TextBlock Text="协议贡献：当前融合中各来源的相对计算权重，不代表真实环境中该协议永远具有相同比例。" Foreground="#4B5563" FontSize="11" TextWrapping="Wrap" Margin="0,2"/>
+                                    <TextBlock Text="轨迹图：灰色虚线是模拟参考轨迹，彩色点是融合状态；右侧图例显示每种颜色对应的无人机ID。" Foreground="#4B5563" FontSize="11" TextWrapping="Wrap" Margin="0,2"/>
+                                </StackPanel></Border></Expander>
+                            </Grid></Border>
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+                <!-- Scenarios and multi-target -->
+                <ScrollViewer x:Name="PageScenarios" Visibility="Collapsed" VerticalScrollBarVisibility="Auto"><StackPanel Margin="26,24">
+                    <TextBlock Text="场景与多目标" Style="{StaticResource PageTitle}"/><TextBlock Text="使用可复现实验模板，或构造1～20个目标的复杂交汇场景" Style="{StaticResource Muted}" Margin="0,6,0,18"/>
+                    <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="330"/><ColumnDefinition Width="14"/><ColumnDefinition/></Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <Border Style="{StaticResource CardBorder}"><StackPanel><TextBlock Text="场景模板" FontSize="16" FontWeight="SemiBold"/><TextBlock Text="内置模板固定目标、环境和随机种子；扩展模板会自动填写参数并运行。" Style="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,5,0,10"/>
+                                <ComboBox x:Name="PresetSelect" SelectedIndex="0" Background="#FFFFFF" Foreground="#202123">
+                                    <ComboBoxItem Tag="chengdu_basic">成都三来源基础场景</ComboBoxItem><ComboBoxItem Tag="shenzhen_fast">深圳快速飞行场景</ComboBoxItem><ComboBoxItem Tag="crossing_targets">双目标交汇场景</ComboBoxItem><ComboBoxItem Tag="single_source">Wi-Fi单来源场景</ComboBoxItem><ComboBoxItem Tag="poor_visibility">低能见度多来源场景</ComboBoxItem>
+                                    <Separator/><ComboBoxItem Tag="urban_dense">城市高密度：8目标交汇</ComboBoxItem><ComboBoxItem Tag="suburban_open">郊区开阔：3目标平行飞行</ComboBoxItem><ComboBoxItem Tag="mountain_fog">山区低能见度：4目标</ComboBoxItem><ComboBoxItem Tag="coastal_wind">沿海大风：5目标</ComboBoxItem><ComboBoxItem Tag="heavy_rain">强降雨：3目标</ComboBoxItem><ComboBoxItem Tag="single_source_stress">单来源压力测试：10目标</ComboBoxItem><ComboBoxItem Tag="close_crossing">近距离交叉：6目标</ComboBoxItem>
+                                </ComboBox>
+                                <Button x:Name="RunPreset" Content="运行所选模板" Style="{StaticResource PrimaryButton}" Margin="0,12,0,0"/>
+                            </StackPanel></Border>
+                            <Border Style="{StaticResource CardBorder}" Margin="0,14,0,0"><StackPanel><TextBlock Text="当地位置与环境" FontSize="16" FontWeight="SemiBold"/><TextBlock Text="定位和联网均由你主动点击。获取的数据只用于填写当前实验参数。" Style="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,5,0,10"/>
+                                <TextBlock Text="搜索城市或地区" Style="{StaticResource Muted}"/><TextBox x:Name="LocationQuery" Text="成都" Style="{StaticResource Input}" Margin="0,3,0,8"/>
+                                <Button x:Name="SearchLocation" Content="联网搜索地点" Style="{StaticResource SecondaryButton}"/>
+                                <ComboBox x:Name="LocationResults" Background="#FFFFFF" Foreground="#202123" Margin="0,8,0,0" ToolTip="选择搜索结果后应用到实验"/>
+                                <Button x:Name="ApplyLocation" Content="应用所选地点" Style="{StaticResource SecondaryButton}" Margin="0,8,0,0"/>
+                                <Grid Margin="0,8,0,0"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition/></Grid.ColumnDefinitions><Button x:Name="UseCurrentLocation" Grid.Column="0" Content="使用当前位置" Style="{StaticResource SecondaryButton}" Margin="0,0,4,0"/><Button x:Name="OpenLocationSettings" Grid.Column="1" Content="定位设置" Style="{StaticResource SecondaryButton}" Margin="4,0,0,0"/></Grid>
+                                <Button x:Name="FetchWeather" Content="获取当前天气并回填" Style="{StaticResource PrimaryButton}" Margin="0,8,0,0"/>
+                                <TextBlock x:Name="LocationStatus" Text="尚未选择当地位置。" Style="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,10,0,0"/>
+                                <TextBlock x:Name="WeatherStatus" Text="天气参数尚未获取。" Style="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                            </StackPanel></Border>
+                            <Border Style="{StaticResource CardBorder}" Margin="0,14,0,0"><StackPanel><TextBlock Text="自定义多目标" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                                <TextBlock Text="目标数量（1～20）" Style="{StaticResource Muted}"/><TextBox x:Name="MultiCount" Text="3" Style="{StaticResource Input}" Margin="0,3,0,8"/>
+                                <TextBlock Text="目标间距（m，0～100000）" Style="{StaticResource Muted}"/><TextBox x:Name="MultiSpacing" Text="80" Style="{StaticResource Input}" Margin="0,3,0,8"/>
+                                <TextBlock Text="相邻高度差（m，−1000～1000）" Style="{StaticResource Muted}"/><TextBox x:Name="MultiAltStep" Text="5" Style="{StaticResource Input}" Margin="0,3,0,8"/>
+                                <TextBlock Text="相邻航向差（°，−360～360）" Style="{StaticResource Muted}"/><TextBox x:Name="MultiHeadingStep" Text="30" Style="{StaticResource Input}" Margin="0,3,0,8"/>
+                                <Button x:Name="RunMulti" Content="按融合实验参数运行" Style="{StaticResource PrimaryButton}"/>
+                            </StackPanel></Border>
+                        </StackPanel>
+                        <Border Grid.Column="2" Style="{StaticResource CardBorder}" MinHeight="520"><Grid><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                            <TextBlock x:Name="ScenarioSummary" Text="运行后显示目标数、观测数、融合状态和异常检测结果。" Style="{StaticResource Muted}" TextWrapping="Wrap"/>
+                            <Canvas x:Name="MultiCanvas" Grid.Row="1" Background="#F8FAFC" Margin="0,14" ClipToBounds="True"/>
+                            <TextBlock x:Name="ScenarioHelp" Grid.Row="2" Text="灰色虚线表示各目标参考轨迹；彩色点表示对应融合状态。目标之间始终按ID隔离关联。" Style="{StaticResource Muted}" TextWrapping="Wrap"/>
+                        </Grid></Border>
+                    </Grid>
+                </StackPanel></ScrollViewer>
+
+                <!-- Import and replay -->
+                <ScrollViewer x:Name="PageImport" Visibility="Collapsed" VerticalScrollBarVisibility="Auto"><StackPanel Margin="26,24">
+                    <TextBlock Text="数据导入与回放" Style="{StaticResource PageTitle}"/><TextBlock Text="导入CSV、JSON或JSONL观测文件，校验字段后执行关联、融合和异常检查" Style="{StaticResource Muted}" Margin="0,6,0,18"/>
+                    <Border Style="{StaticResource CardBorder}"><Grid><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="110"/><ColumnDefinition Width="120"/></Grid.ColumnDefinitions>
+                        <TextBox x:Name="ImportPath" Style="{StaticResource Input}" ToolTip="选择CSV、JSON或JSONL文件"/><Button x:Name="BrowseImport" Grid.Column="1" Content="选择文件" Style="{StaticResource SecondaryButton}" Margin="10,0,0,0"/><Button x:Name="RunImport" Grid.Column="2" Content="导入并分析" Style="{StaticResource PrimaryButton}" Margin="10,0,0,0"/>
+                    </Grid></Border>
+                    <Grid Margin="0,14,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="340"/><ColumnDefinition Width="14"/><ColumnDefinition/></Grid.ColumnDefinitions>
+                        <Border Style="{StaticResource CardBorder}"><StackPanel><TextBlock Text="导入结果" FontSize="16" FontWeight="SemiBold"/><TextBlock x:Name="ImportSummary" Text="尚未导入文件。必需字段包括目标ID、时间、协议；位置字段至少包含可用于融合的经纬度。" Style="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,10,0,0"/><TextBlock x:Name="AnomalySummary" Text="异常规则覆盖身份冲突、重复播放、异常速度、时间倒退和位置跳变。" Foreground="#F0A04B" TextWrapping="Wrap" Margin="0,14,0,0"/></StackPanel></Border>
+                        <Border Grid.Column="2" Style="{StaticResource CardBorder}"><StackPanel><TextBlock Text="时间回放" FontSize="16" FontWeight="SemiBold"/><Slider x:Name="ReplaySlider" Minimum="0" Maximum="0" Value="0" TickFrequency="1" IsSnapToTickEnabled="True" Margin="0,20,0,8"/><TextBlock x:Name="ReplayInfo" Text="导入成功后拖动滑块查看每个时间窗的目标和协议。" Style="{StaticResource Muted}" TextWrapping="Wrap"/><Canvas x:Name="ImportCanvas" Height="270" Background="#F8FAFC" Margin="0,18,0,0"/></StackPanel></Border>
+                    </Grid>
+                    <Border Background="#FFF8E7" BorderBrush="#E8C56A" BorderThickness="1" CornerRadius="8" Padding="12" Margin="0,14,0,0"><TextBlock Text="导入数据只在本机处理。无效行会被记录并跳过；导入结果不等同于真实部署精度证明。" Foreground="#7A5818" TextWrapping="Wrap"/></Border>
+                    <Button x:Name="OpenSchemaGuide" Content="查看统一数据格式说明" Style="{StaticResource SecondaryButton}" Width="210" HorizontalAlignment="Left" Margin="0,12,0,0"/>
+                </StackPanel></ScrollViewer>
+
+                <!-- Comparison and reports -->
+                <ScrollViewer x:Name="PageAnalysis" Visibility="Collapsed" VerticalScrollBarVisibility="Auto"><StackPanel Margin="26,24">
+                    <TextBlock Text="算法对比与报告" Style="{StaticResource PageTitle}"/><TextBlock Text="在同一组模拟观测上公平比较算法，并导出可追溯结果" Style="{StaticResource Muted}" Margin="0,6,0,18"/>
+                    <Button x:Name="RunComparison" Content="使用融合实验参数运行对比" Style="{StaticResource PrimaryButton}" Width="250" HorizontalAlignment="Left"/>
+                    <Grid Margin="0,14,0,0"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition/><ColumnDefinition/></Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource CardBorder}" Margin="0,0,6,0"><StackPanel><TextBlock Text="最佳单来源" Style="{StaticResource Muted}"/><TextBlock x:Name="CompareBest" Text="—" FontSize="24" Foreground="#5B9CF6" Margin="0,7"/><TextBlock Text="水平RMSE，越小越好" Style="{StaticResource Muted}"/></StackPanel></Border>
+                        <Border Grid.Column="1" Style="{StaticResource CardBorder}" Margin="6,0"><StackPanel><TextBlock Text="简单平均" Style="{StaticResource Muted}"/><TextBlock x:Name="CompareAverage" Text="—" FontSize="24" Foreground="#F0A04B" Margin="0,7"/><TextBlock Text="水平RMSE，越小越好" Style="{StaticResource Muted}"/></StackPanel></Border>
+                        <Border Grid.Column="2" Style="{StaticResource CardBorder}" Margin="6,0,0,0"><StackPanel><TextBlock Text="协方差加权" Style="{StaticResource Muted}"/><TextBlock x:Name="CompareCov" Text="—" FontSize="24" Foreground="#58C792" Margin="0,7"/><TextBlock Text="当前稳定基线算法" Style="{StaticResource Muted}"/></StackPanel></Border>
+                    </Grid>
+                    <Border Style="{StaticResource CardBorder}" Margin="0,16,0,0"><StackPanel><TextBlock Text="导出分析报告" FontSize="16" FontWeight="SemiBold"/><TextBlock Text="支持Markdown说明报告、JSON完整证据数据和CSV融合状态表。报告包含参数、融合状态、异常和算法对比。" Style="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,6,0,12"/><StackPanel Orientation="Horizontal"><ComboBox x:Name="ReportFormat" SelectedIndex="0" Width="150" Background="#FFFFFF" Foreground="#202123"><ComboBoxItem Tag="md">Markdown报告</ComboBoxItem><ComboBoxItem Tag="json">JSON证据包</ComboBoxItem><ComboBoxItem Tag="csv">CSV状态表</ComboBoxItem></ComboBox><Button x:Name="ExportReport" Content="选择位置并导出" Style="{StaticResource PrimaryButton}" Margin="12,0,0,0"/><TextBlock x:Name="ReportStatus" Text="尚未导出" Style="{StaticResource Muted}" VerticalAlignment="Center" Margin="14,0,0,0"/></StackPanel></StackPanel></Border>
+                </StackPanel></ScrollViewer>
+
+                <!-- Evidence -->
+                <ScrollViewer x:Name="PageEvidence" Visibility="Collapsed" VerticalScrollBarVisibility="Auto"><StackPanel Margin="26,24"><TextBlock Text="证据与协议" Style="{StaticResource PageTitle}"/><TextBlock Text="规范化字段、缺失值语义和输出证据链" Style="{StaticResource Muted}" Margin="0,6,0,18"/>
+                    <Border Style="{StaticResource CardBorder}"><StackPanel><TextBlock Text="字段语义" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                        <Grid Margin="0,0,0,2"><Grid.ColumnDefinitions><ColumnDefinition Width="160"/><ColumnDefinition Width="230"/><ColumnDefinition Width="*"/><ColumnDefinition Width="110"/></Grid.ColumnDefinitions><TextBlock Text="来源" Foreground="#A3A3A3" Margin="0,0,12,0"/><TextBlock Grid.Column="1" Text="角色" Foreground="#A3A3A3" Margin="0,0,12,0"/><TextBlock Grid.Column="2" Text="缺失字段" Foreground="#A3A3A3" Margin="0,0,12,0"/><TextBlock Grid.Column="3" Text="状态" Foreground="#A3A3A3"/></Grid>
+                        <Separator Margin="0,8" Background="#D9D9E3"/>
+                        <Grid Margin="0,6"><Grid.ColumnDefinitions><ColumnDefinition Width="160"/><ColumnDefinition Width="230"/><ColumnDefinition Width="*"/><ColumnDefinition Width="110"/></Grid.ColumnDefinitions><TextBlock Text="Wi-Fi承载" Margin="0,0,12,0"/><TextBlock Grid.Column="1" Text="RID观测来源" Margin="0,0,12,0"/><TextBlock Grid.Column="2" Text="显式 valid mask" Margin="0,0,12,0"/><TextBlock Grid.Column="3" Text="可模拟" Foreground="#58C792"/></Grid>
+                        <Grid Margin="0,6"><Grid.ColumnDefinitions><ColumnDefinition Width="160"/><ColumnDefinition Width="230"/><ColumnDefinition Width="*"/><ColumnDefinition Width="110"/></Grid.ColumnDefinitions><TextBlock Text="BLE承载" Margin="0,0,12,0"/><TextBlock Grid.Column="1" Text="RID观测来源" Margin="0,0,12,0"/><TextBlock Grid.Column="2" Text="速度不再填充为0" Margin="0,0,12,0"/><TextBlock Grid.Column="3" Text="可模拟" Foreground="#58C792"/></Grid>
+                        <Grid Margin="0,6"><Grid.ColumnDefinitions><ColumnDefinition Width="160"/><ColumnDefinition Width="230"/><ColumnDefinition Width="*"/><ColumnDefinition Width="110"/></Grid.ColumnDefinitions><TextBlock Text="NR实验来源" Margin="0,0,12,0"/><TextBlock Grid.Column="1" Text="扩展观测来源" Margin="0,0,12,0"/><TextBlock Grid.Column="2" Text="按模式记录" Margin="0,0,12,0"/><TextBlock Grid.Column="3" Text="可模拟" Foreground="#58C792"/></Grid>
+                        <Grid Margin="0,6"><Grid.ColumnDefinitions><ColumnDefinition Width="160"/><ColumnDefinition Width="230"/><ColumnDefinition Width="*"/><ColumnDefinition Width="110"/></Grid.ColumnDefinitions><TextBlock Text="LoRa实验来源" Margin="0,0,12,0"/><TextBlock Grid.Column="1" Text="扩展观测来源" Margin="0,0,12,0"/><TextBlock Grid.Column="2" Text="高度/速度显式缺失" Margin="0,0,12,0"/><TextBlock Grid.Column="3" Text="可模拟" Foreground="#58C792"/></Grid>
+                    </StackPanel></Border>
+                    <Border Style="{StaticResource CardBorder}" Margin="0,16,0,0"><StackPanel><TextBlock Text="标准边界" FontSize="16" FontWeight="SemiBold"/><TextBlock Text="RID消息模式与Wi-Fi、BLE等承载方式分开描述；NR和LoRa仅作为实验扩展来源，不表述为通用法定RID标准。" Style="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,8,0,0"/></StackPanel></Border>
+                </StackPanel></ScrollViewer>
+
+                <!-- Adaptation -->
+                <ScrollViewer x:Name="PageAdapt" Visibility="Collapsed"><StackPanel Margin="26,24"><TextBlock Text="少样本适配" Style="{StaticResource PageTitle}"/><TextBlock Text="使用物理状态标签和独立查询集评估，不再使用恒等重建" Style="{StaticResource Muted}" Margin="0,6,0,18"/>
+                    <Border Style="{StaticResource CardBorder}"><StackPanel Orientation="Horizontal"><TextBlock Text="随机种子" VerticalAlignment="Center" Margin="0,0,10,0"/><TextBox x:Name="AdaptSeed" Text="42" Style="{StaticResource Input}" Width="110"/><Button x:Name="RunAdapt" Content="运行适配评估" Style="{StaticResource PrimaryButton}" Margin="12,0,0,0"/></StackPanel></Border>
+                    <Grid Margin="0,16,0,0"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition/><ColumnDefinition/></Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource CardBorder}" Margin="0,0,6,0"><StackPanel><TextBlock Text="适配前损失" Style="{StaticResource Muted}"/><TextBlock x:Name="AdaptBefore" Text="—" FontSize="24" FontWeight="SemiBold" Foreground="#F0A04B" Margin="0,6"/><TextBlock Text="独立查询集" Style="{StaticResource Muted}"/></StackPanel></Border>
+                        <Border Grid.Column="1" Style="{StaticResource CardBorder}" Margin="6,0"><StackPanel><TextBlock Text="适配后损失" Style="{StaticResource Muted}"/><TextBlock x:Name="AdaptAfter" Text="—" FontSize="24" FontWeight="SemiBold" Foreground="#58C792" Margin="0,6"/><TextBlock Text="独立查询集" Style="{StaticResource Muted}"/></StackPanel></Border>
+                        <Border Grid.Column="2" Style="{StaticResource CardBorder}" Margin="6,0,0,0"><StackPanel><TextBlock Text="改善倍数" Style="{StaticResource Muted}"/><TextBlock x:Name="AdaptGain" Text="—" FontSize="24" FontWeight="SemiBold" Foreground="#10A37F" Margin="0,6"/><TextBlock Text="物理状态目标" Style="{StaticResource Muted}"/></StackPanel></Border>
+                    </Grid><Border Style="{StaticResource CardBorder}" Margin="0,16,0,0"><TextBlock x:Name="AdaptInfo" Text="支持集用于更新，查询集来自未参与更新的后续样本。" Style="{StaticResource Muted}" TextWrapping="Wrap"/></Border>
+                </StackPanel></ScrollViewer>
+
+                <!-- Tests -->
+                <Grid x:Name="PageTests" Visibility="Collapsed" Margin="26,24"><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="70"/><RowDefinition Height="*"/></Grid.RowDefinitions><StackPanel><TextBlock Text="验证中心" Style="{StaticResource PageTitle}"/><TextBlock Text="运行核心测试和重构专项测试" Style="{StaticResource Muted}" Margin="0,6,0,18"/></StackPanel>
+                    <Border Grid.Row="1" Style="{StaticResource CardBorder}" Padding="12"><StackPanel Orientation="Horizontal"><Button x:Name="RunTests" Content="运行全部测试" Style="{StaticResource PrimaryButton}"/><TextBlock x:Name="TestStatus" Text="尚未运行" Style="{StaticResource Muted}" VerticalAlignment="Center" Margin="14,0"/></StackPanel></Border>
+                    <Border Grid.Row="2" Style="{StaticResource CardBorder}" Margin="0,14,0,0"><TextBox x:Name="TestOutput" Background="#FFFFFF" Foreground="#202123" BorderThickness="0" FontFamily="Cascadia Mono" FontSize="12" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/></Border>
+                </Grid>
+
+                <!-- Settings -->
+                <ScrollViewer x:Name="PageSettings" Visibility="Collapsed"><StackPanel Margin="26,24"><TextBlock Text="界面与维护" Style="{StaticResource PageTitle}"/><TextBlock Text="页面、主题和业务桥接均已分离，方便后续按区域调整" Style="{StaticResource Muted}" Margin="0,6,0,18"/>
+                    <Border Style="{StaticResource CardBorder}"><StackPanel><TextBlock Text="可调整位置" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,14"/><TextBlock Text="颜色、字体、圆角、控件样式                        desktop/RIDFusion.xaml" Margin="0,9"/><TextBlock Text="导航、运行逻辑、轨迹绘制                              desktop/Run-RIDFusion.ps1" Margin="0,9"/><TextBlock Text="算法JSON接口                                               rid_fusion/desktop_api.py" Margin="0,9"/><TextBlock Text="Python备用界面                                             rid_fusion_ui/" Margin="0,9"/><TextBlock Text="后续可把星系式轨迹、地图或其他展示单独替换为新的Canvas组件。" Style="{StaticResource Muted}" Margin="0,15,0,0"/></StackPanel></Border>
+                </StackPanel></ScrollViewer>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

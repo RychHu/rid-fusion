@@ -83,6 +83,7 @@ class MAMLAdapter:
         source_protocols: list[str],
         source_tokens: list[list[SpatioTemporalToken]],
         source_embeddings: list[np.ndarray],
+        source_targets: Optional[list[np.ndarray]] = None,
         n_episodes: int = 100,
     ) -> list[float]:
         """
@@ -103,7 +104,7 @@ class MAMLAdapter:
             # 1. Sample a source protocol
             idx = np.random.randint(0, len(source_protocols))
             all_x = source_embeddings[idx]
-            all_y = source_embeddings[idx]  # target = input (auto-encoder style)
+            all_y = source_targets[idx] if source_targets is not None else source_embeddings[idx]
 
             n = len(all_x)
             if n < 12:
@@ -145,6 +146,7 @@ class MAMLAdapter:
         self,
         support_tokens: list[SpatioTemporalToken],
         support_embeddings: np.ndarray,
+        support_targets: Optional[np.ndarray] = None,
         n_shots: int = 10,
     ) -> "MAMLAdapter":
         """
@@ -159,7 +161,7 @@ class MAMLAdapter:
             copy.deepcopy(self.W),
             copy.deepcopy(self.b),
             support_embeddings[:n_shots],
-            support_embeddings[:n_shots],  # auto-encoder target
+            support_targets[:n_shots] if support_targets is not None else support_embeddings[:n_shots],
         )
 
         adapted = MAMLAdapter(
@@ -243,9 +245,11 @@ def simulate_meta_learning_demo(
     return {
         "meta_train_losses": losses,
         "random_projection_loss": float(loss_random),
+        "unadapted_query_loss": float(loss_random),
         "adapted_loss": float(loss_adapted),
         "improvement_factor": float(loss_random / max(loss_adapted, 1e-8)),
         "n_source_tokens": {"wifi": len(wifi_tokens), "ble": len(ble_tokens)},
         "n_target_tokens": len(nr_tokens),
         "n_adaptation_shots": 10,
+        "evaluation_target": "normalised physical state [lat, lon, alt, vx, vy, vz]",
     }

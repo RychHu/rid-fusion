@@ -7,7 +7,7 @@ and meta-learning adaptation for heterogeneous drone Remote ID signals.
 Target: ASTM F3411 (Wi-Fi Beacon), Bluetooth 5.0 BLE ADVB, 4G/5G NR Broadcast
 """
 
-__version__ = "0.2.0"
+__version__ = "0.4.0"
 
 from rid_fusion.models import (
     ProtocolType,
@@ -17,4 +17,15 @@ from rid_fusion.models import (
     FusedToken,
     Detection,
     FusionConfig,
+    RIDObservation,
+    ObservationGroup,
+    FusedState,
 )
+
+from rid_fusion.fusion import RIDFusionEngine
+
+__all__ = [
+    "ProtocolType", "ObjectClass", "SpatioTemporalToken", "TokenSequence",
+    "FusedToken", "Detection", "FusionConfig", "RIDObservation",
+    "ObservationGroup", "FusedState", "RIDFusionEngine",
+]

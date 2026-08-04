@@ -2,11 +2,9 @@ from setuptools import setup, find_packages
 
 setup(
     name="rid-fusion",
-    version="0.2.0",
-    description="Multi-Protocol Remote ID Signal Fusion Engine — "
-                "protocol-agnostic tokenization, cross-modal attention fusion, "
-                "and meta-learning adaptation for heterogeneous drone RID signals.",
-    author="Kongyu Technologies",
+    version="0.4.0",
+    description="Explainable multi-source Remote ID association and state fusion studio",
+    author="RychHu",
     packages=find_packages(),
     python_requires=">=3.9",
     install_requires=[
@@ -14,8 +12,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "rid-fusion-test = tests.test_core:main",
-            "rid-fusion-gui = rid_fusion_gui:main",
+            "rid-fusion = rid_fusion.desktop_api:main",
         ],
     },
     classifiers=[
