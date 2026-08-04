@@ -105,6 +105,7 @@ class MultiHeadCrossAttention:
         key: np.ndarray,     # (batch_k, d_model) or (d_model,)
         value: np.ndarray,   # (batch_v, d_model) or (d_model,)
         context_bias: Optional[np.ndarray] = None,
+        mask: Optional[np.ndarray] = None,
     ) -> np.ndarray:
         """Multi-head cross-attention fusion.
         
@@ -143,6 +144,8 @@ class MultiHeadCrossAttention:
 
         # Scaled dot-product attention: (max_b, 1, 1)
         scores = (Q @ K.transpose(0, 2, 1)) / math.sqrt(self.d_model)
+        if mask is not None:
+            scores = scores + mask
         attn = self._softmax(scores)
 
         # Apply attention: (max_b, 1, d_model)

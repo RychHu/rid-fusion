@@ -177,7 +177,19 @@ class RIDSignalSimulator:
             token.protocol_payload = {
                 "protocol": proto.value,
                 "profile": profile,
+                "vel_error_std_ms": profile["vel_error_std_ms"],
             }
+            token.field_validity = {
+                "lat": "lat" in profile["fields_available"],
+                "lon": "lon" in profile["fields_available"],
+                "alt": "alt" in profile["fields_available"],
+                "vx": "vx" in profile["fields_available"],
+                "vy": "vy" in profile["fields_available"],
+                "vz": "vz" in profile["fields_available"],
+                "rssi": "rssi" in profile["fields_available"],
+                "snr": "snr" in profile["fields_available"],
+            }
+            token.receiver_id = f"SIM-{proto.value}"
 
             tokens.append(token)
 

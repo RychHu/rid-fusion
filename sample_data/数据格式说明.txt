@@ -1,0 +1,59 @@
+RID Fusion Studio 统一观测数据格式
+=================================
+
+支持文件类型：CSV、JSON、JSONL。
+
+建议每条观测至少包含以下字段：
+
+uas_id              目标ID，例如 UAS-001
+protocol            来源类型，例如 WIFI、BLE、NR、LORA
+timestamp_utc       观测时间，使用UTC秒数
+lat_deg             纬度，范围 -90～90
+lon_deg             经度，范围 -180～180
+
+常用可选字段：
+
+observation_id              观测唯一编号
+receive_timestamp_utc       接收时间
+alt_m                       高度，单位米
+vx_ms、vy_ms、vz_ms          三个方向的速度，单位米/秒
+rssi_dbm                    接收信号强度
+snr_db                      信噪比
+horizontal_variance_m2      水平位置方差，必须大于0
+vertical_variance_m2        垂直位置方差，必须大于0
+velocity_variance_ms2       速度方差，必须大于0
+receiver_id                 接收设备或接收节点ID
+transport_type              承载方式说明
+
+允许的协议名称：
+
+WIFI、WIFI_BEACON
+BLE、BLE_ADVB
+NR、NR_BROADCAST
+LORA、LORAWAN
+ADS_B
+
+缺失值规则：
+
+1. 不知道的高度或速度应留空或写null，不要用0代替；
+2. 真实速度为0时可以明确填写0；
+3. 方差必须大于0，数值越小代表输入测量越集中；
+4. 无效行会被记录并跳过，不影响其他有效行继续导入。
+
+示例文件：observations_example.csv
+机器可读Schema：rid_observation_schema.json
+
+JSON文件可以直接使用观测数组，也可以使用：
+
+{
+  "observations": [
+    {
+      "uas_id": "UAS-001",
+      "protocol": "WIFI",
+      "timestamp_utc": 0,
+      "lat_deg": 30.5728,
+      "lon_deg": 104.0668,
+      "alt_m": 120
+    }
+  ]
+}
